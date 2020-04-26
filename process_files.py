@@ -55,7 +55,7 @@ def get_efield(datadir,fileno):
 
     nantennas=len(antenna_files)
 
-
+    '''
     hillas = np.genfromtxt(re.findall("PARAMETERS.*",open(longfile,'r').read()))[2:]
     zenith=(np.genfromtxt(re.findall("THETAP.*",open(steerfile,'r').read()))[1])*np.pi/180. #rad; CORSIKA coordinates
     azimuth=np.mod(np.genfromtxt(re.findall("PHIP.*",open(steerfile,'r').read()))[1],360)*np.pi/180.  #rad; CORSIKA coordinates
@@ -91,5 +91,5 @@ def get_efield(datadir,fileno):
 
         temp=np.copy(antenna_positions)
     antenna_positions[:,0], antenna_positions[:,1], antenna_positions[:,2] = -1*(temp[:,1])/100.,(temp[:,0])/100., temp[:,2]/100.
-
+    '''
     return antenna_positions,time,efield,zenith,az_rot,energy,hillas[2]
