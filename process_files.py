@@ -55,14 +55,24 @@ def get_efield(datadir,fileno):
 
     nantennas=len(antenna_files)
 
-    '''
-    hillas = np.genfromtxt(re.findall("PARAMETERS.*",open(longfile,'r').read()))[2:]
-    zenith=(np.genfromtxt(re.findall("THETAP.*",open(steerfile,'r').read()))[1])*np.pi/180. #rad; CORSIKA coordinates
-    azimuth=np.mod(np.genfromtxt(re.findall("PHIP.*",open(steerfile,'r').read()))[1],360)*np.pi/180.  #rad; CORSIKA coordinates
-    az_rot=3*np.pi/2+azimuth    #conversion from CORSIKA coordinates to 0=east, pi/2=north
+    file=open(longfile,'r')
+    param_list=(re.findall("PARAMETERS.*",file.read()))[0]
+    xmax=(float(param_list.split()[4]))
+    file.close()
+    file=open(steerfile,'r')
+    az_list=re.findall("PHI.*",file.read())[0]
+    azimuth=np.mod(float(az_list.split()[1]),360.0)*np.pi/180.#rad; CORSIKA coordinates
+    az_rot=3*np.pi/2+azimuth
+     
+    file.seek(0)
+    zenith_list=(re.findall("THETAP.*",file.read()))[0]
+    zenith=float(zenith_list.split()[1])*np.pi/180. #rad; CORSIKA coordinates
 
-    energy=np.genfromtxt(re.findall("ERANGE.*",open(steerfile,'r').read()))[1] #GeV
-
+    file.seek(0)
+    energy_list=(re.findall("ERANGE.*",file.read()))[0]
+    energy=float(energy_list.split()[1])#GeV
+    file.close()
+     
     for j in np.arange(nantennas):
 
         antenna_file = lines[j].split(" ")[5]
@@ -91,5 +101,6 @@ def get_efield(datadir,fileno):
 
         temp=np.copy(antenna_positions)
     antenna_positions[:,0], antenna_positions[:,1], antenna_positions[:,2] = -1*(temp[:,1])/100.,(temp[:,0])/100., temp[:,2]/100.
-    '''
-    return antenna_positions,time,efield,zenith,az_rot,energy,hillas[2]
+    
+    return antenna_positions,time,efield,zenith,az_rot,energy,xmax
+    
