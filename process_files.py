@@ -104,3 +104,177 @@ def get_efield(datadir,fileno):
     
     return antenna_positions,time,efield,zenith,az_rot,energy,xmax
     
+
+
+
+def ProcessSim(datadir,fileno):
+ 
+    lSample=128*2
+    lFFT=lSample/2+1
+ 
+    lFFTkeep=20
+ 
+    longfile = '{0}/DAT{1}.long'.format(datadir,str(fileno).zfill(6))
+    steerfile = '{0}/steering/RUN{1}.inp'.format(datadir,str(fileno).zfill(6))
+    listfile = open('{0}/steering/SIM{1}.list'.format(datadir,str(fileno).zfill(6)))
+    lines = listfile.readlines()
+    nTotalAnt=len(lines)
+ 
+    antenna_positions=np.zeros([0,3])
+    antenna_files=[]
+ 
+    for l in np.arange(nTotalAnt):
+        antenna_position_hold=np.asarray([float(lines[l].split(" ")[2]),float(lines[l].split(" ")[3]),float(lines[l].split(" ")[4])])#read antenna position...
+        antenna_file_hold=(lines[l].split(" ")[5].split()[0])   #... and output filename from the antenna list file
+        antenna_files.append(antenna_file_hold)
+        antenna_positions=np.concatenate((antenna_positions,[antenna_position_hold]))
+
+    lowco=30.0
+    hico=80.0
+    nantennas=len(antenna_files)
+
+    onskypower=np.zeros([nantennas,2])
+    #antenna_position=np.zeros([nantennas,3])
+    filteredpower=np.zeros([nantennas,2])
+    power=np.zeros([nantennas,2])
+    power11=np.zeros([nantennas,2])
+    power21=np.zeros([nantennas,2])
+    power41=np.zeros([nantennas,2])
+    peak_time=np.zeros([nantennas,2])
+    peak_bin=np.zeros([nantennas,2])
+    peak_amplitude=np.zeros([nantennas,2])
+    pol_angle=np.zeros([nantennas])
+    pol_angle_filt=np.zeros([nantennas])
+
+
+    file=open(longfile,'r')
+    param_list=(re.findall("PARAMETERS.*",file.read()))[0]
+    xmax=(float(param_list.split()[4]))
+    file.close()
+    file=open(steerfile,'r')
+    az_list=re.findall("PHI.*",file.read())[0]
+    azimuth=np.mod(float(az_list.split()[1]),360.0)*np.pi/180.#rad; CORSIKA coordinates
+    az_rot=3*np.pi/2+azimuth
+     
+    file.seek(0)
+    zenith_list=(re.findall("THETAP.*",file.read()))[0]
+    zenith=float(zenith_list.split()[1])*np.pi/180. #rad; CORSIKA coordinates
+
+    file.seek(0)
+    energy_list=(re.findall("ERANGE.*",file.read()))[0]
+    energy=float(energy_list.split()[1])#GeV
+    file.close()
+
+    fullFFT=np.zeros([nantennas,lFFTkeep])
+    fullPower=np.zeros([nantennas])
+    fullFrequencies=np.zeros([lFFTkeep])
+    wfX=np.zeros([nantennas,81])
+    wfY=np.zeros([nantennas,81])
+    wfZ=np.zeros([nantennas,81])
+    time_all=np.zeros([81])
+    wfX=np.zeros([nantennas,81])
+    wfY=np.zeros([nantennas,81])
+    wfZ=np.zeros([nantennas,81])
+
+    for j in np.arange(nantennas):
+     #for j in np.arange(1):
+
+        antenna_file = lines[j].split(" ")[5]
+        coreasfile = '{0}/SIM{1}_coreas/raw_{2}.dat'.format(datadir,str(fileno).zfill(6),antenna_files[j])
+
+        data=np.genfromtxt(coreasfile)
+        data[:,1:]*=2.99792458e4 # convert Ex, Ey and Ez (not time!) to Volt/meter
+        dlength=data.shape[0]
+        poldata=np.ndarray([dlength,2])
+        XYZdata=np.ndarray([dlength,2])
+        az_rot=3*np.pi/2+azimuth    #conversion from CORSIKA coordinates to 0=east, pi/2=north
+        zen_rot=zenith
+        XYZ=np.zeros([dlength,3])
+        XYZ[:,0]=-data[:,2] #conversion from CORSIKA coordinates to 0=east, pi/2=north
+        XYZ[:,1]=data[:,1]
+        XYZ[:,2]=data[:,3]
+     
+
+        # Convert to, v, vxB, vxvxB coordinates to compute Stokes parameters and polarization angle
+        UVW=GetUVW(XYZ,0,0,0,zen_rot,az_rot,1.1837)
+        alpha= GetAlpha(zen_rot,az_rot,1.1837)
+     
+        poldata[:,0] = UVW[:,0]
+        poldata[:,1] = UVW[:,1]
+
+        spec=np.fft.rfft(poldata, axis=-2)
+        #print spec.shape
+        # Apply antenna model
+        tstep = data[1,0]-data[0,0]
+        onskypower[j]=np.array([np.sum(poldata[:,0]*poldata[:,0]),np.sum(poldata[:,1]*poldata[:,1])])*tstep
+
+
+        freqhi = 0.5/tstep/1e6 # MHz
+        freqstep = freqhi/(dlength/2+1) # MHz
+        frequencies = np.arange(0,freqhi,freqstep)*1e6 # Hz
+        frequencies = np.arange(0,dlength/2+1)*freqstep*1e6
+
+        #Apply window and reduce maximum frequency to acquire downsampled signal
+        fb = int(np.floor(lowco/freqstep))
+        lb = int(np.floor(hico/freqstep)+1)
+        window = np.zeros([1,dlength/2+1,1])
+        window[0,fb:lb+1,0]=1
+     
+        pow0=np.abs(spec[:,0])*np.abs(spec[:,0])
+        pow1=np.abs(spec[:,1])*np.abs(spec[:,1])
+     
+     
+        ospow0=np.abs(spec[:,0])*np.abs(spec[:,0])
+        ospow1=np.abs(spec[:,1])*np.abs(spec[:,1])
+        power[j]=np.array([np.sum(pow0[fb:lb+1]),np.sum(pow1[fb:lb+1])])/(dlength/2.)*tstep
+        filteredpower[j]=np.array([np.sum(ospow0[fb:lb+1]),np.sum(ospow1[fb:lb+1])])/(dlength/2.)*tstep
+     
+        # assume that simulated time resolution is higher than LOFAR time resolution (t_step=5 ns)
+        maxfreqbin= int(np.floor(tstep/5e-9 * dlength/2.)+1)
+        shortspec=np.array([spec[0:maxfreqbin,0]*window[0,0:maxfreqbin,0],spec[0:maxfreqbin,1]*window[0,0:maxfreqbin,0]])
+        filt=np.fft.irfft(shortspec, axis=-1)
+     
+        # after downsampling, renormalize the signal!
+        dlength_new=filt.shape[1]
+        filt=filt*1.0*dlength_new/dlength
+        # to calculate the time of arrival upsample with a factor 5
+        filt_upsampled=resample(filt,5*dlength_new,axis=-1)
+        # compute hilbert enevelope
+        hilbenv=np.abs(hilbert(filt,axis=-1))
+        hilbenv_upsampled=np.abs(hilbert(filt_upsampled,axis=-1))
+     
+        # peak_time is the bin where the maximum is located; NOT the actual time of the peak!
+        peak_bin[j]=np.argmax(hilbenv,axis=-1)
+        peak_time[j]=np.argmax(hilbenv_upsampled,axis=-1)*1e-9 #in seconds
+        peak_amplitude[j]=np.max(hilbenv_upsampled,axis=-1)
+        if (peak_amplitude[j,0]>peak_amplitude[j,1]):
+            pt=peak_bin[j,0]
+        else:
+            pt=peak_bin[j,1]
+     
+        # for 3 different window size, the total power is calculated. The window is allowed to `wrap around', so some voodoo is needed to determine the range:
+        d=filt.shape[1]
+        rng=5
+        a=int(np.max([0,pt-rng]))
+        b=int(pt+rng+1)
+        c=int(np.min([d,pt+d-rng]))
+        power11[j]=(np.sum(np.square(filt[:,a:b]),axis=-1)+np.sum(np.square(filt[:,c:d]),axis=-1))*5e-9
+        rng=10
+        a=int(np.max([0,pt-rng]))
+        b=int(pt+rng+1)
+        c=int(np.min([d,pt+d-rng]))
+        power21[j]=(np.sum(np.square(filt[:,a:b]),axis=-1)+np.sum(np.square(filt[:,c:d]),axis=-1))*5e-9
+        rng=20
+        a=int(np.max([0,pt-rng]))
+        b=int(pt+rng+1)
+        c=int(np.min([d,pt+d-rng]))
+        power41[j]=(np.sum(np.square(filt[:,a:b]),axis=-1)+np.sum(np.square(filt[:,c:d]),axis=-1))*5e-9
+
+    temp=np.copy(antenna_positions)
+    antenna_positions[:,0], antenna_positions[:,1], antenna_positions[:,2] = -1*(temp[:,1])/100.,(temp[:,0])/100., temp[:,2]/100.
+
+    azimuth=3*np.pi/2+azimuth #  +x = east (phi=0), +y = north (phi=90)
+ 
+    ant_pos_uvw=GetUVW(antenna_positions, 0, 0, 0, zenith, az_rot,1.1837)
+
+    return zenith, azimuth, alpha, energy, hillas, antenna_positions, ant_pos_uvw, power11/(377.0),power21/(377.0),power41/(377.0)
