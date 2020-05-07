@@ -81,7 +81,8 @@ def get_efield(datadir,fileno):
         data=np.genfromtxt(coreasfile)
         data[:,1:]*=2.99792458e4 # convert Ex, Ey and Ez (not time!) to Volt/meter
         dlength=data.shape[0]
-    
+        poldata=np.ndarray([dlength,2])
+
         XYZ=np.zeros([dlength,3])
         XYZ[:,0]=-data[:,2] #conversion from CORSIKA coordinates to 0=east, pi/2=north
         XYZ[:,1]=data[:,1]
@@ -92,7 +93,8 @@ def get_efield(datadir,fileno):
         XYZ[:,2]=np.roll(XYZ[:,2], 800)
 
         UVW=GetUVW(XYZ,0,0,0,zenith,az_rot,1.1837)
-    
+        poldata[:,0] = -1.0/np.sin(zen_rot)*data[:,3] # -1/sin(theta) *z
+        poldata[:,1] = np.sin(az_rot)*data[:,2] + np.cos(az_rot)*data[:,1] # -sin(phi) *x + cos(phi)*y in coREAS 0=positive y, 1=negative x
     
     
     
@@ -103,7 +105,7 @@ def get_efield(datadir,fileno):
     antenna_positions[:,0], antenna_positions[:,1], antenna_positions[:,2] = -1*(temp[:,1])/100.,(temp[:,0])/100., temp[:,2]/100.
     ant_pos_uvw=GetUVW(antenna_positions, 0, 0, 0, zenith, az_rot,1.1837)
 
-    return antenna_positions,ant_pos_uvw,time,efield,zenith,az_rot,energy,xmax
+    return antenna_positions,ant_pos_uvw,time,efield,poldata,zenith,az_rot,energy,xmax
     
 
 
