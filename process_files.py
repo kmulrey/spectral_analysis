@@ -93,7 +93,7 @@ def get_efield(datadir,fileno):
         XYZ[:,2]=np.roll(XYZ[:,2], 800)
 
         UVW=GetUVW(XYZ,0,0,0,zenith,az_rot,1.1837)
-        poldata[:,0] = -1.0/np.sin(zen_rot)*data[:,3] # -1/sin(theta) *z
+        poldata[:,0] = -1.0/np.sin(zenith)*data[:,3] # -1/sin(theta) *z
         poldata[:,1] = np.sin(az_rot)*data[:,2] + np.cos(az_rot)*data[:,1] # -sin(phi) *x + cos(phi)*y in coREAS 0=positive y, 1=negative x
     
     
