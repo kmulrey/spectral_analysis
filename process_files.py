@@ -44,6 +44,8 @@ def get_efield(datadir,fileno):
     antenna_files=[]
 
     efield=np.zeros([nTotalAnt,dlength,3])
+    polfield=np.zeros([nTotalAnt,dlength,2])
+
     time=np.zeros([nTotalAnt,dlength])
 
     for l in np.arange(nTotalAnt):
@@ -93,11 +95,11 @@ def get_efield(datadir,fileno):
         XYZ[:,2]=np.roll(XYZ[:,2], 800)
 
         UVW=GetUVW(XYZ,0,0,0,zenith,az_rot,1.1837)
-        poldata[:,0] = -1.0/np.sin(zenith)*data[:,3] # -1/sin(theta) *z
-        poldata[:,1] = np.sin(az_rot)*data[:,2] + np.cos(az_rot)*data[:,1] # -sin(phi) *x + cos(phi)*y in coREAS 0=positive y, 1=negative x
+        poldata[:,0] = -1.0/np.sin(zenith)*XYZ[:,2] # -1/sin(theta) *z
+        poldata[:,1] = -1*np.sin(az_rot)*XYZ[:,0] + np.cos(az_rot)*XYZ[:,1] # -sin(phi) *x + cos(phi)*y in coREAS 0=positive y, 1=negative x
     
     
-    
+        polfield[j]=poldata
         efield[j]=UVW#data[:,1:]#UVW#
         time[j]=data.T[0]
 
@@ -105,7 +107,7 @@ def get_efield(datadir,fileno):
     antenna_positions[:,0], antenna_positions[:,1], antenna_positions[:,2] = -1*(temp[:,1])/100.,(temp[:,0])/100., temp[:,2]/100.
     ant_pos_uvw=GetUVW(antenna_positions, 0, 0, 0, zenith, az_rot,1.1837)
 
-    return antenna_positions,ant_pos_uvw,time,efield,poldata,zenith,az_rot,energy,xmax
+    return antenna_positions,ant_pos_uvw,time,efield,polfield,zenith,az_rot,energy,xmax
     
 
 
