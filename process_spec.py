@@ -9,8 +9,7 @@ import re
 import matplotlib as mpl
 import matplotlib.cm as cm
 from scipy.optimize import curve_fit
-
-
+import fit_functions as fit
 
 def fit_spec_LOFAR(freq,spec):
 
