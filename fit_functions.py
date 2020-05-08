@@ -14,6 +14,15 @@ from scipy.optimize import curve_fit
 from lmfit import Model
 
 # first order polynomial fit
+
+def linear(x,b,m):
+    y=np.zeros(len(x))
+    for i in np.arange(len(x)):
+        y[i]=b+x[i]*m
+    return y
+
+
+
 def first_order(x,a,m):
     y=np.zeros(len(x))
     for i in np.arange(len(x)):

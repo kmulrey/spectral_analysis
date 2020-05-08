@@ -11,6 +11,8 @@ import matplotlib.cm as cm
 from scipy.optimize import curve_fit
 import fit_functions as fit
 
+
+# process for characterizing LOFAR bandwidth 30-80 MHz
 def fit_spec_LOFAR(freq,spec):
 
     fmin=30
@@ -32,7 +34,34 @@ def fit_spec_LOFAR(freq,spec):
 
     return a,m,n,chi2,redchi2,n_points,flag
 
+
+def fit_slope_LOFAR(freq,spec):
+
+fmin=30
+fmax=80
+fmax2=80
+e_min=-3.3
+min_points=8
+flag=0
+
+n_points=len(freq[(freq>fmin)*(freq<fmax)*(spec>e_min)])
+
+if n_points<min_points:
+    flag=1
+
+try:
+    a,m,n,chi2,redchi2=fit.fit_routine_second_order(freq[(freq>fmin)*(freq<fmax2)*(spec>e_min)],spec[(freq>fmin)*(freq<fmax2)*(spec>e_min)])
+except:
+    flag=1
+
+return a,m,n,chi2,redchi2,n_points,flag
+
+
+
+
 # process for characterizing SKA bandwidth 50-350 MHz
+def fit_spec_LOFAR(freq,spec):
+
 '''
 i=14
 fmin=50
