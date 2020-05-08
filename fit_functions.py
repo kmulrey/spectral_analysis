@@ -15,10 +15,10 @@ from lmfit import Model
 
 # first order polynomial fit
 
-def linear(x,b,m):
+def linear(x,a,m):
     y=np.zeros(len(x))
     for i in np.arange(len(x)):
-        y[i]=b+x[i]*m
+        y[i]=a+x[i]*m
     return y
 
 
@@ -60,6 +60,16 @@ def piecewise2(x,a,m,n,t,b,p,q):
     return y
 
 
+
+def fit_routine_linear(freq,spec):
+    mymodel = Model(linear)
+    params = mymodel.make_params(a=-2, m=-1.2e-2)
+    result = mymodel.fit(spec, params, x=freq)
+    chi2=result.chisqr
+    red_chi2=result.redchi
+    a=result.best_values['a']
+    m=result.best_values['m']
+    return a,m,chi2,red_chi2
 
 def fit_routine_first_order(freq,spec):
     mymodel = Model(first_order)
