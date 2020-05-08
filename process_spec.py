@@ -58,11 +58,11 @@ def fit_slope_LOFAR(freq,spec):
 
 
 
-
+'''
 # process for characterizing SKA bandwidth 50-350 MHz
 def fit_spec_LOFAR(freq,spec):
 
-'''
+
 i=14
 fmin=50
 fmax=350
