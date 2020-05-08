@@ -76,7 +76,7 @@ def fit_routine_second_order(freq,spec):
 
 
 
-def fit_routine_peicewise1(freq,spec):
+def fit_routine_piecewise1(freq,spec):
     chi2s=100*np.zeros([320])
     turnover=np.zeros([320])
     mymodel = Model(piecewise1)
@@ -105,7 +105,7 @@ def fit_routine_peicewise1(freq,spec):
 
 
 
-def fit_routine_peicewise2(freq,spec):
+def fit_routine_piecewise2(freq,spec):
     chi2s=100*np.zeros([320])
     turnover=np.zeros([320])
     mymodel = Model(piecewise2)
