@@ -72,7 +72,10 @@ def fit_spec_LOFAR(freq,spec):
 
     e_min=-3.3
     logspec1=np.log10(np.abs(spec))
-   
+    n_points=len(freq[(freq>fmin)*(freq<fmax)*(spec>e_min)])
+
+    if n_points<min_points:
+        flag=1
 
     flag=0
 
@@ -139,7 +142,10 @@ def fit_spec_CODALEMA(freq,spec):
 
     e_min=-3.3
     logspec1=np.log10(np.abs(spec))
-    
+    n_points=len(freq[(freq>fmin)*(freq<fmax)*(spec>e_min)])
+
+    if n_points<min_points:
+        flag=1
 
     flag=0
 
