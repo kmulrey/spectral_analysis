@@ -71,9 +71,8 @@ def fit_spec_LOFAR(freq,spec):
     f_1=110
 
     e_min=-3.3
-    logspec1=np.log10(np.abs(pol_spec_pos_vxb[i].T[0]))
-    logspec2=np.log10(np.abs(pol_spec_pos_vxb[i].T[1]))
-    logspec=np.asarray([logspec1,logspec2])
+    logspec1=np.log10(np.abs(spec))
+   
 
     flag=0
 
@@ -139,9 +138,8 @@ def fit_spec_CODALEMA(freq,spec):
 
 
     e_min=-3.3
-    logspec1=np.log10(np.abs(pol_spec_pos_vxb[i].T[0]))
-    logspec2=np.log10(np.abs(pol_spec_pos_vxb[i].T[1]))
-    logspec=np.asarray([logspec1,logspec2])
+    logspec1=np.log10(np.abs(spec))
+    
 
     flag=0
 
