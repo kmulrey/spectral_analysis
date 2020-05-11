@@ -30,7 +30,7 @@ def fit_spec_LOFAR(freq,spec):
     try:
         a,m,n,chi2,redchi2=fit.fit_routine_second_order(freq[(freq>fmin)*(freq<fmax2)*(spec>e_min)],spec[(freq>fmin)*(freq<fmax2)*(spec>e_min)])
     except:
-        print("error doin LOFAR spec fit")
+        print("error doing LOFAR spec fit")
         flag=1
         a=0
         m=0
@@ -60,7 +60,14 @@ def fit_slope_LOFAR(freq,spec):
     try:
         a,m,chi2,redchi2=fit.fit_routine_linear(freq[(freq>fmin)*(freq<fmax2)*(spec>e_min)],spec[(freq>fmin)*(freq<fmax2)*(spec>e_min)])
     except:
+        print("error doing LOFAR slope fit")
         flag=1
+        a=0
+        m=0
+        chi2=100
+        redchi2=100
+        n_points=0
+        
 
     return a,m,chi2,redchi2,n_points,flag
 
