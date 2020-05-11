@@ -59,7 +59,7 @@ def fit_slope_LOFAR(freq,spec):
 
 
 # process for characterizing SKA bandwidth 50-350 MHz
-def fit_spec_LOFAR(freq,spec):
+def fit_spec_SKA(freq,spec):
 
 
     i=14
@@ -122,7 +122,7 @@ def fit_spec_LOFAR(freq,spec):
         flag=1
 
 
-    return a_use,m_use,a_use,m_use,n_use,t_use,chi2_use,redchi2_use,n_points,flag
+    return a_use,m_use,n_use,chi2_use,redchi2_use,n_points,flag
 
 
 
