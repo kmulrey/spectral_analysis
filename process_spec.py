@@ -15,8 +15,8 @@ import fit_functions as fit
 # process for characterizing LOFAR bandwidth 30-80 MHz
 def fit_spec_LOFAR(freq,spec):
 
-    fmin=30
-    fmax=80
+    fmin=33
+    fmax=77
     fmax2=80
     e_min=-3.3
     min_points=8
@@ -45,8 +45,8 @@ def fit_spec_LOFAR(freq,spec):
 
 def fit_slope_LOFAR(freq,spec):
     
-    fmin=30
-    fmax=80
+    fmin=33
+    fmax=77
     fmax2=80
     e_min=-3.3
     min_points=8
@@ -78,8 +78,8 @@ def fit_spec_SKA(freq,spec):
 
 
     i=14
-    fmin=50
-    fmax=350
+    fmin=53
+    fmax=347
     fmax2=250
     min_points=8
 
@@ -148,8 +148,8 @@ def fit_spec_CODALEMA(freq,spec):
 
 
     i=14
-    fmin=30
-    fmax=250
+    fmin=33
+    fmax=247
     fmax2=250
     min_points=8
 
