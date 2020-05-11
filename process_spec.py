@@ -66,6 +66,7 @@ def fit_spec_LOFAR(freq,spec):
     fmin=50
     fmax=350
     fmax2=250
+    min_points=8
 
     f_0=50
     f_1=110
@@ -135,6 +136,7 @@ def fit_spec_CODALEMA(freq,spec):
     fmin=30
     fmax=250
     fmax2=250
+    min_points=8
 
     f_0=30
     f_1=110
