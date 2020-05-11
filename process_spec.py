@@ -136,8 +136,7 @@ def fit_spec_SKA(freq,spec):
     else:
         flag=1
 
-
-    return a_use,m_use,n_use,chi2_use,redchi2_use,n_points,flag
+    return a_use,m_use,n_use,t_use,b_use,p_use,q_use,chi2_use,redchi2_use,regime,n_points,flag
 
 
 
