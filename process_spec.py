@@ -121,7 +121,7 @@ def fit_spec_SKA(freq,spec):
     m_use=0
     n_use=0
     p_use=0
-    b_usexw=0
+    b_use=0
     q_use=0
     t_use=0
     chi2_use=100
