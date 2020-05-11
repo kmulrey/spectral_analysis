@@ -191,6 +191,7 @@ def fit_spec_CODALEMA(freq,spec):
     a_use=0
     m_use=0
     n_use=0
+    b_use=0
     p_use=0
     q_use=0
     t_use=0
