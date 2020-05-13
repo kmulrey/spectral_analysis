@@ -302,7 +302,7 @@ def getEM(datadir,fileno):
 
     myFile.close()
     #myFile=open(longfile,'r')
-    longinfo=np.genfromtxt(myFile,skip_header=start-1,max_rows=(stop-start+1))
+    longinfo=np.genfromtxt(longfile,skip_header=start-1,max_rows=(stop-start+1))
 
     #myFile.close()
 
