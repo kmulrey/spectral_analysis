@@ -12,7 +12,7 @@ from scipy import signal
 from scipy.optimize import curve_fit
 
 conversion_factor_integrated_signal = (1/376.73)#* 6.24150934e18  # to convert V**2/m**2 * s -> J/m**2 -> eV/m**2
-
+atm_dir=atm_dir='/vol/astro7/lofar/sim/pipeline/atmosphere_files/'
 
 def GetUVW(pos, cx, cy, cz, zen, az, Binc):
     relpos = pos-np.array([cx,cy,cz])
@@ -312,3 +312,13 @@ def getEM(datadir,fileno):
     other_dep=np.sum(longinfo.T[4]+longinfo.T[5]+longinfo.T[6]+longinfo.T[7]+longinfo.T[8])
 
     return em_dep,other_dep,total_dep
+
+
+def get_atm(event):
+
+    # read atmospheric parameters ATMLAY, A, B, C respectively for event
+    filename=atm_dir+'ATMOSPHERE_'+event+'.DAT'
+    file=open(filename,'r')
+    atm=np.genfromtxt(file,skip_header=1,max_rows=4)
+    file.close()
+    return atm
