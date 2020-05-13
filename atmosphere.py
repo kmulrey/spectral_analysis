@@ -1,12 +1,6 @@
 import numpy as np
-from optparse import OptionParser
-import cPickle
 import re
-from scipy.signal import hilbert
-from scipy.signal import resample
-import scipy.fftpack as fftp
-import os
-from scipy import signal
+
 
 r_e = 6.371 * 1e6  # radius of Earth
 h_max = 11282900.2  # height above sea level where the mass overburden vanishes, cm
