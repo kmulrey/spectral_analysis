@@ -283,3 +283,32 @@ def ProcessSim(datadir,fileno):
     ant_pos_uvw=GetUVW(antenna_positions, 0, 0, 0, zenith, az_rot,1.1837)
 
     return zenith, azimuth, alpha, energy, hillas, antenna_positions, ant_pos_uvw, power11/(377.0),power21/(377.0),power41/(377.0)
+
+
+def getEM(datadir,fileno):
+
+    longfile = '{0}/DAT{1}.long'.format(datadir,str(fileno).zfill(6))
+    lookup1='LONGITUDINAL ENERGY DEPOSIT'
+    lookup2='FIT OF THE HILLAS CURVE'
+    start=-1
+    stop=-1
+
+    with open(longfile) as myFile:
+        for num, line in enumerate(myFile, 1):
+            if lookup1 in line:
+                start=num+2
+            if lookup2 in line:
+                stop=num-1
+
+    myFile.close()
+    myFile=open(longfile,'r')
+    longinfo=np.genfromtxt(myFile,skip_header=start-1,max_rows=(stop-start+1))
+
+    myFile.close()
+
+
+    total_dep= np.sum(longinfo.T[9])
+    em_dep=np.sum(longinfo.T[1]+longinfo.T[2]+longinfo.T[3])
+    other_dep=np.sum(longinfo.T[4]+longinfo.T[5]+longinfo.T[6]+longinfo.T[7]+longinfo.T[8])
+
+    return em_dep,other_dep,total_dep
