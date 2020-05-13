@@ -301,10 +301,10 @@ def getEM(datadir,fileno):
                 stop=num-1
 
     myFile.close()
-    myFile=open(longfile,'r')
+    #myFile=open(longfile,'r')
     longinfo=np.genfromtxt(myFile,skip_header=start-1,max_rows=(stop-start+1))
 
-    myFile.close()
+    #myFile.close()
 
 
     total_dep= np.sum(longinfo.T[9])
