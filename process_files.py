@@ -318,7 +318,7 @@ def get_atm(event):
 
     # read atmospheric parameters ATMLAY, A, B, C respectively for event
     filename=atm_dir+'ATMOSPHERE_'+event+'.DAT'
-    f#ile=open(filename,'r')
+    #file=open(filename,'r')
     atm=np.genfromtxt(file,skip_header=1,max_rows=4)
     #file.close()
     return atm
