@@ -134,7 +134,7 @@ def get_vertical_height(T,atm):
     return h
 
 
-def get_n_at_xmax(atm_file,h):
+def get_n_at_xmax(atm_file,hi):
     atm_data=np.genfromtxt(atm_file,skip_header=6)
     f = interp1d(atm_data.T[0]*100,atm_data.T[1])
     return f(hi)
