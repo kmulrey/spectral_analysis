@@ -122,3 +122,20 @@ def integrate_one_pol(r,flu):
     
     
     return 2*np.pi*integral#*6.2415e18 # to eV
+
+
+def get_clipping(dxmax):
+    """ get clipping correction
+    
+    Parameters
+    ----------
+    dxmax : float
+    distance to shower maximum in g/cm^2
+    
+    Returns
+    -------
+    float
+    fraction of radiation energy that is radiated in the atmosphere
+    
+    """
+    return 1 - np.exp(-8.7 * (dxmax * 1e-3 + 0.29) ** 1.89)
