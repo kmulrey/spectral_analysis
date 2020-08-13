@@ -93,3 +93,32 @@ def return_a(rho,avg,p0,p1,p2):
 
 
 
+def integrate(r,flu0,flu1):
+    n=len(r)
+    dr=r[1]-r[0]
+    integral=0
+    for i in np.arange(n-1):
+        r0=r[i]
+        r1=r[i+1]
+        val0=r0*(flu0[i]+flu1[i])
+        val1=r1*(flu0[i+1]+flu1[i+1])
+        integral=integral+(val0+val1)*0.5*dr
+    
+    
+    
+    return 2*np.pi*integral*6.2415e18 # to eV
+
+def integrate_one_pol(r,flu):
+    n=len(r)
+    dr=r[1]-r[0]
+    integral=0
+    for i in np.arange(n-1):
+        r0=r[i]
+        r1=r[i+1]
+        val0=r0*(flu[i])
+        val1=r1*(flu[i+1])
+        integral=integral+(val0+val1)*0.5*dr
+    
+    
+    
+    return 2*np.pi*integral*6.2415e18 # to eV
