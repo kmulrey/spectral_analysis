@@ -60,8 +60,8 @@ if path.isdir(base_dir+'/'+event+'/1/coreas/iron/'):
 if path.isdir(base_dir+'/'+event+'/2/coreas/iron/'):
     dir_list_iron.append(base_dir+'/'+event+'/2/coreas/iron/')
 
-#for j in np.arange(len(dir_list_proton)):
-for j in np.arange(1):
+for j in np.arange(len(dir_list_proton)):
+#for j in np.arange(1):
 
     direc=dir_list_proton[j]
     os.chdir(direc)
@@ -73,8 +73,8 @@ for j in np.arange(1):
         runlist.append(file.split('.')[0].split('DAT')[1])
 
 
-    #for i in np.arange(len(runlist)):
-    for i in np.arange(2):
+    for i in np.arange(len(runlist)):
+    #for i in np.arange(2):
 
         try:
             base=direc
@@ -111,8 +111,8 @@ for j in np.arange(1):
         except:
             print('error__________')
             
-#for j in np.arange(len(dir_list_iron)):
-for j in np.arange(1):
+for j in np.arange(len(dir_list_iron)):
+#for j in np.arange(1):
 
     direc=dir_list_iron[j]
     os.chdir(direc)
@@ -124,8 +124,8 @@ for j in np.arange(1):
         runlist.append(file.split('.')[0].split('DAT')[1])
 
 
-    #for i in np.arange(len(runlist)):
-    for i in np.arange(2):
+    for i in np.arange(len(runlist)):
+    #for i in np.arange(2):
 
         try:
             base=direc
