@@ -1,7 +1,6 @@
 import numpy as np
 #import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
-import helper as helper
 
 #from radiotools.atmosphere import models as atm
 
