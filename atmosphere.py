@@ -131,3 +131,9 @@ def get_vertical_height(T,atm):
     else:
         h = -1. * c[i] * np.log((T - a[i]) / b[i])
     return h
+
+
+def get_n_at_xmax(atm_file,h):
+    atm_data=np.genfromtxt(atm_file,skip_header=6)
+    f = interp1d(atm_data.T[0]*100,atm_data.T[1])
+    return f(hi)
