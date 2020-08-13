@@ -57,9 +57,9 @@ def return_Srd_info(RUNNR,event_no,primary):
     e_filt_30_200,time_filt_30_200=process_data.lofar_filter(efield,time,30.0,200.0,1.0)
     e_filt_50_350,time_filt_50_350=process_data.lofar_filter(efield,time,50.0,350.0,1.0)
 
-    fluence_30_80=fluence.calculate_energy_fluence_vector(efield_30_80, time, signal_window=100., remove_noise=True)
-    fluence_30_200=fluence.calculate_energy_fluence_vector(efield_30_200, time, signal_window=100., remove_noise=True)
-    fluence_50_350=fluence.calculate_energy_fluence_vector(efield_50_350, time, signal_window=100., remove_noise=True)
+    fluence_30_80=fluence.calculate_energy_fluence_vector(e_filt_30_80, time_filt_30_80, signal_window=100., remove_noise=True)
+    fluence_30_200=fluence.calculate_energy_fluence_vector(e_filt_30_200, time_filt_30_200, signal_window=100., remove_noise=True)
+    fluence_50_350=fluence.calculate_energy_fluence_vector(e_filt_50_350, time_filt_50_350, signal_window=100., remove_noise=True)
 
     pos_uvw_vxb=ant_pos_uvw[0::8]
     pos_uvw_vxvxb=ant_pos_uvw[2::8]
