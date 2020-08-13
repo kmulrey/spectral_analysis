@@ -12,7 +12,7 @@ from scipy.optimize import curve_fit
 from scipy import signal
 
 
-def filter(times,traces, fmin, fmax): # 2d-> time,data
+def filter(times,traces, fmin, fmax,order): # 2d-> time,data
     if traces.ndim == 2:
         traces = np.expand_dims(traces, axis=0)
 
@@ -28,7 +28,6 @@ def filter(times,traces, fmin, fmax): # 2d-> time,data
     highcut=fmax*1e6
     low = lowcut/nyq
     high = highcut/nyq
-    order=1
     b, a = signal.butter(order, [low, high], btype='band')
 
     for i in np.arange(nTraces):
