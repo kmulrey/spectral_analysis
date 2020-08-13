@@ -9,6 +9,8 @@ import re
 import matplotlib as mpl
 import matplotlib.cm as cm
 from scipy.optimize import curve_fit
+from scipy import signal
+
 
 def filter(times,traces, fmin, fmax): # 2d-> time,data
     if traces.ndim == 2:
