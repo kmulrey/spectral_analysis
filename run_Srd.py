@@ -12,7 +12,7 @@ from optparse import OptionParser
 parser = OptionParser()
 parser.add_option("-e", "--event", default = "132649890", help = "event")
 (options, args) = parser.parse_args()
-event = int(options.eventid)
+event = int(options.event)
 
 
 
