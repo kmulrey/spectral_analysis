@@ -65,23 +65,53 @@ def return_Srd_info(RUNNR,event_no,primary,base):
 
     fluence_30_80_vxvxb_0=np.concatenate([fluence_30_80[2::8].T[0],fluence_30_80[6::8].T[0]])
     fluence_30_80_vxvxb_1=np.concatenate([fluence_30_80[2::8].T[1],fluence_30_80[6::8].T[1]])
+    
+    fluence_30_200_vxvxb_0=np.concatenate([fluence_30_200[2::8].T[0],fluence_30_200[6::8].T[0]])
+    fluence_30_200_vxvxb_1=np.concatenate([fluence_30_200[2::8].T[1],fluence_30_200[6::8].T[1]])
+     
+    fluence_50_350_vxvxb_0=np.concatenate([fluence_50_350[2::8].T[0],fluence_50_350[6::8].T[0]])
+    fluence_50_350_vxvxb_1=np.concatenate([fluence_50_350[2::8].T[1],fluence_50_350[6::8].T[1]])
 
     pos_vxvxb_all=np.concatenate([neg_uvw_vxvxb.T[1],pos_uvw_vxvxb.T[1]])
             
     inds = pos_vxvxb_all.argsort()
             
     sorted_pos=pos_vxvxb_all[inds]
+    
     sorted_fluence_30_80_gm=fluence_30_80_vxvxb_0[inds]
     sorted_fluence_30_80_ce=fluence_30_80_vxvxb_1[inds]
+    sorted_fluence_30_200_gm=fluence_30_200_vxvxb_0[inds]
+    sorted_fluence_30_200_ce=fluence_30_200_vxvxb_1[inds]
+    sorted_fluence_50_350_gm=fluence_50_350_vxvxb_0[inds]
+    sorted_fluence_50_350_ce=fluence_50_350_vxvxb_1[inds]
+    
+    
+    
     xnew = np.linspace(0, 400, num=1000, endpoint=True)
-    f0 = interp1d(sorted_pos, sorted_fluence_30_80_gm, kind='cubic')
-    f1 = interp1d(sorted_pos, sorted_fluence_30_80_ce, kind='cubic')
+    f0_30_80 = interp1d(sorted_pos, sorted_fluence_30_80_gm, kind='cubic')
+    f1_30_80 = interp1d(sorted_pos, sorted_fluence_30_80_ce, kind='cubic')
+    f0_30_200 = interp1d(sorted_pos, sorted_fluence_30_200_gm, kind='cubic')
+    f1_30_200 = interp1d(sorted_pos, sorted_fluence_30_200_ce, kind='cubic')
+    f0_50_350 = interp1d(sorted_pos, sorted_fluence_50_350_gm, kind='cubic')
+    f1_50_350 = interp1d(sorted_pos, sorted_fluence_50_350_ce, kind='cubic')
 
-    Erad=radiation_energy.integrate(xnew,f0(xnew),f1(xnew))
-    Erad_gm=radiation_energy.integrate_one_pol(xnew,f0(xnew))
-    Erad_ce=radiation_energy.integrate_one_pol(xnew,f1(xnew))
+    Erad_30_80=radiation_energy.integrate(xnew,f0_30_80(xnew),f1_30_80(xnew))
+    Erad_gm_30_80=radiation_energy.integrate_one_pol(xnew,f0_30_80(xnew))
+    Erad_ce_30_80=radiation_energy.integrate_one_pol(xnew,f1_30_80(xnew))
+    
+    Erad_30_200=radiation_energy.integrate(xnew,f0_30_200(xnew),f1_30_200(xnew))
+    Erad_gm_30_200=radiation_energy.integrate_one_pol(xnew,f0_30_200(xnew))
+    Erad_ce_30_200=radiation_energy.integrate_one_pol(xnew,f1_30_200(xnew))
+    
+    Erad_50_350=radiation_energy.integrate(xnew,f0_50_350(xnew),f1_50_350(xnew))
+    Erad_gm_50_350=radiation_energy.integrate_one_pol(xnew,f0_50_350(xnew))
+    Erad_ce_50_350=radiation_energy.integrate_one_pol(xnew,f1_50_350(xnew))
+    
+    
+    
+    
     clip_ratio=radiation_energy.get_clipping(dmax)
 
 
 
-    return energy,zenith,az_rot,xmax,hi,rho,rho2,dmax,n_xmax,alpha,clip_ratio,Erad,Erad_gm,Erad_ce,em_dep,total_dep
+    return energy,zenith,az_rot,xmax,hi,rho,rho2,dmax,n_xmax,alpha,clip_ratio,Erad_30_80,Erad_gm_30_80,Erad_ce_30_80,Erad_30_200,Erad_gm_30_200,Erad_ce_30_200,Erad_50_350,Erad_gm_50_350,Erad_ce_50_350,em_dep,total_dep
