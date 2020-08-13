@@ -106,7 +106,7 @@ def integrate(r,flu0,flu1):
     
     
     
-    return 2*np.pi*integral*6.2415e18 # to eV
+    return 2*np.pi*integral#*6.2415e18 # to eV
 
 def integrate_one_pol(r,flu):
     n=len(r)
@@ -121,4 +121,4 @@ def integrate_one_pol(r,flu):
     
     
     
-    return 2*np.pi*integral*6.2415e18 # to eV
+    return 2*np.pi*integral#*6.2415e18 # to eV
