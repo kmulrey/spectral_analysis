@@ -10,7 +10,7 @@ from os import path
 from optparse import OptionParser
 
 parser = OptionParser()
-parser.add_option("-e", "--event", default = "132649890", help = "event)
+parser.add_option("-e", "--event", default = "132649890", help = "event")
 (options, args) = parser.parse_args()
 event = int(options.eventid)
 
@@ -60,7 +60,9 @@ if path.isdir(base_dir+'/'+event+'/1/coreas/iron/'):
 if path.isdir(base_dir+'/'+event+'/2/coreas/iron/'):
     dir_list_iron.append(base_dir+'/'+event+'/2/coreas/iron/')
 
-for j in np.arange(len(dir_list_proton));
+#for j in np.arange(len(dir_list_proton)):
+for j in np.arange(1):
+
     direc=dir_list_proton[j]
     os.chdir(direc)
     runlist=[]
@@ -71,7 +73,9 @@ for j in np.arange(len(dir_list_proton));
         runlist.append(file.split('.')[0].split('DAT')[1])
 
 
-    for i in np.arange(len(runlist)):
+    #for i in np.arange(len(runlist)):
+    for i in np.arange(2):
+
         try:
             base=direc
             print (event,runlist[i])
@@ -104,11 +108,12 @@ for j in np.arange(len(dir_list_proton));
             em_dep.append(em_dep1)
             total_dep.append(total_dep1)
             
+        except:
+            print('error__________')
             
-       except:
-        print('error__________')
-            
-for j in np.arange(len(dir_list_iron));
+#for j in np.arange(len(dir_list_iron)):
+for j in np.arange(1):
+
     direc=dir_list_iron[j]
     os.chdir(direc)
     runlist=[]
@@ -119,7 +124,9 @@ for j in np.arange(len(dir_list_iron));
         runlist.append(file.split('.')[0].split('DAT')[1])
 
 
-    for i in np.arange(len(runlist)):
+    #for i in np.arange(len(runlist)):
+    for i in np.arange(2):
+
         try:
             base=direc
             print (event,runlist[i])
