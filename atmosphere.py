@@ -1,5 +1,6 @@
 import numpy as np
 import re
+from scipy.interpolate import interp1d
 
 
 r_e = 6.371 * 1e6  # radius of Earth
