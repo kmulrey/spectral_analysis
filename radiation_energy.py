@@ -76,10 +76,10 @@ def StoEm(S,A=1.683,B=2.006):
 
 
 def return_Srd(Erad,zenith,density,aplpha,type):
-    a=return_a(density[i]*1e3*np.cos(zenith[i]),rho_avg,p0a,p1a,p2a)/mag**0.9
-    Srd=Erad[i]/np.sin(alpha[i])**2/mag**1.8
-    Srd_1=Erad[i]/(a**2+(1-a**2)*np.sin(alpha[i])**2)/mag**1.8
-    if type[i]==0:
+    a=return_a(density*1e3*np.cos(zenith),rho_avg,p0a,p1a,p2a)/mag**0.9
+    Srd=Erad/np.sin(alpha)**2/mag**1.8
+    Srd_1=Erad/(a**2+(1-a**2)*np.sin(alpha)**2)/mag**1.8
+    if type==0:
         Srd_2=Erad/(a**2+(1-a**2)*np.sin(alpha)**2)/(1-p0s_p+p0s_p*np.exp(p1s_p*(density*1e3*np.cos(zenith)-rho_avg)))**2/mag**1.8
     else:
         Srd_2=Erad/(a**2+(1-a**2)*np.sin(alpha)**2)/(1-p0s_fe+p0s_fe*np.exp(p1s_fe*(density*1e3*np.cos(zenith)-rho_avg)))**2/mag**1.8
