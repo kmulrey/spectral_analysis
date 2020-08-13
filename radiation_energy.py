@@ -2,12 +2,7 @@ import numpy as np
 #import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 
-#from radiotools.atmosphere import models as atm
 
-# see Glaser et al., JCAP 09(2016)024 for the derivation of the formulas
-
-#average_xmax = 669.40191244545326  # 1 EeV, 50% proton, 50% iron composition
-#average_zenith = np.deg2rad(45)
 #atmc = atm.Atmosphere(model=1)
 average_density = 6.5e-4 #in g/cm^3#atmc.get_density(average_zenith, average_xmax) * 1e-3  # in kg/m^3
 mag=2.03
