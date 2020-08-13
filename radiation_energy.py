@@ -75,7 +75,7 @@ def StoEm(S,A=1.683,B=2.006):
 
 
 
-def return_Srd(Erad,zenith,density,aplpha,type):
+def return_Srd(Erad,zenith,density,alpha,type):
     a=return_a(density*1e3*np.cos(zenith),rho_avg,p0a,p1a,p2a)/mag**0.9
     Srd=Erad/np.sin(alpha)**2/mag**1.8
     Srd_1=Erad/(a**2+(1-a**2)*np.sin(alpha)**2)/mag**1.8
