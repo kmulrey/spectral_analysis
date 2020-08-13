@@ -10,126 +10,24 @@ from scipy.interpolate import interp1d
 #average_zenith = np.deg2rad(45)
 #atmc = atm.Atmosphere(model=1)
 average_density = 6.5e-4 #in g/cm^3#atmc.get_density(average_zenith, average_xmax) * 1e-3  # in kg/m^3
+mag=2.03
 
 
-def get_clipping(dxmax):
-    """ get clipping correction
-        
-        Parameters
-        ----------
-        dxmax : float
-        distance to shower maximum in g/cm^2
-        
-        Returns
-        -------
-        float
-        fraction of radiation energy that is radiated in the atmosphere
-        
-        """
-    return 1 - np.exp(-8.7 * (dxmax * 1e-3 + 0.29) ** 1.89)
+rho_avg=0.72  # average density, 0.72 kg/m3
+# charge excess parameters
+p0a=0.2
+p1a=1.27
+p2a=-0.08
 
+# slant depth parameters proton
+p0s_p=1.02
+p1s_p=-0.49
+p2s_p=0
 
-def get_a(rho):
-    """ get relative charge excess strength
-        
-        Parameters
-        ----------
-        rho : float
-        density at shower maximum in g/cm^3
-        
-        Returns
-        -------
-        float
-        relative charge excess strength a
-        """
-    return -0.23604683 + 0.43426141 * np.exp(1.11141046 * ((rho - average_density)*1e3))
-
-'''
-def get_a_zenith(zenith):
-    """ get relative charge excess strength wo Xmax information
-        
-        Parameters
-        ----------
-        zentith : float
-        zenith angle in rad according to radiotools default coordinate system
-        
-        Returns
-        --------
-        float
-        relative charge excess strength a
-        """
-    rho = atmc.get_density(zenith, average_xmax) * 1e-3
-    return -0.24304254 + 0.4511355 * np.exp(1.1380946 * (rho - average_density))
-'''
-
-def get_S_basic(Erad, sinalpha,b_scale=2.03, b=1.8):
-    """ get corrected radiation energy (S_RD) no charge excess or density
-        
-        Parameters
-        ----------
-        Erad : float
-        radiation energy (in eV)
-        sinalpha: float
-        sine of angle between shower axis and geomagnetic field
-       
-        
-        Returns
-        --------
-        float:
-        corrected radiation energy (in eV)
-        """
-    return Erad / (sinalpha ** 2 * b_scale ** b)
-
-
-
-def get_S(Erad, sinalpha, density, p0=0.250524463912, p1=-2.95290494,
-          b_scale=2.03, b=1.8):
-    """ get corrected radiation energy (S_RD)
-        
-        Parameters
-        ----------
-        Erad : float
-        radiation energy (in eV)
-        sinalpha: float
-        sine of angle between shower axis and geomagnetic field
-        density : float
-        density at shower maximum in g/cm^3
-        
-        Returns
-        --------
-        float:
-        corrected radiation energy (in eV)
-        """
-    a = get_a(density) /( b_scale ** (0.9))
-    
-    Erad_corr=(Erad/(a**2+(1-a**2)*sinalpha**2*b_scale**b))#*((1)/(1-p0+p0*np.exp(p1*(density-average_density)*1000)**2))
-    
-    return Erad_corr #Erad / (a ** 2 + (1 - a ** 2) * sinalpha ** 2 * b_scale ** b) / \(1 - p0 + p0 * np.exp(p1 * (density - average_density)*1e3)) ** 2
-
-
-
-def get_radiation_energy(Srd, sinalpha, density, p0=0.239,
-                         p1=-3.13, b_scale=2.03, b=1.8):
-    """ get radiation energy (S_RD)
-        
-        Parameters
-        ----------
-        Srd : float
-        corrected radiation energy (in eV)
-        sinalpha: float
-        sine of angle between shower axis and geomagnetic field
-        density : float
-        density at shower maximum in g/cm^3
-        
-        Returns
-        --------
-        float:
-        radiation energy (in eV)
-        """
-    return Srd/((1 - p0 + p0 * np.exp(p1 * (density - average_density)*1e3)) )**2
-
-
-
+# slant depth parameters iron
+p0s_fe=0.98
+p1s_fe=-0.47
+p2s_fe=0
 
 
 def integral(fluence,pos):
@@ -170,35 +68,6 @@ def integral(fluence,pos):
 
     integral=integral*2*np.pi
 
-    #print '{0:.2f}'.format(integral)
-    '''
-    plt.ion()
-    fig=plt.figure(facecolor='white')
-    ax1=fig.add_subplot(1,1,1)
-    #ax1.plot(pos_uvw_vxb.T[0],pos_uvw_vxb.T[1],'.',label='+ vxb')
-    #ax1.plot(neg_uvw_vxb.T[0],neg_uvw_vxb.T[1],'.',label='- vxb')
-    #ax1.plot(pos_uvw_vxvxb.T[0],pos_uvw_vxvxb.T[1],'.',label='+ vxvxb')
-    #ax1.plot(neg_uvw_vxvxb.T[0],neg_uvw_vxvxb.T[1],'.',label='- vxvxb')
-
-    
-    #ax1.plot(ant_pos_shower.T[0],ant_pos_shower.T[1],'.')
-    #ax1.plot(pos_uvw_vxb.T[0],fluence_pos_vxb,'.',label='pos vxB')
-    #ax1.plot(pos_uvw_vxvxb.T[1],fluence_pos_vxvxb,'.',label='pos vxvxB')
-    #ax1.plot(neg_uvw_vxb.T[0],fluence_neg_vxb,'.',label='neg vxB')
-    #x1.plot(neg_uvw_vxvxb.T[1],fluence_neg_vxvxb,'.',label='neg vxvxB')
-    ax1.plot(sorted_pos,sorted_fluence_vxvxb,'.',label='vxvxB')
-    ax1.plot(xnew,f0(xnew),'.',label='vxvxB')
-
-    #ax1.plot(efield[a][1])
-    #ax1.plot(efield[a][2])
-    ax1.legend(loc='upper left', shadow=False,frameon=False)
-    ax1.set_xlabel('vxvxB position (m)')
-    ax1.set_ylabel('fluence')
-
-    plt.show()
-    raw_input()
-    plt.close()
-    '''
 
     return integral
 
@@ -211,6 +80,21 @@ def StoEm(S,A=1.683,B=2.006):
 
 
 
+def return_Srd(Erad,zenith,density,aplpha,type):
+    a=return_a(density[i]*1e3*np.cos(zenith[i]),rho_avg,p0a,p1a,p2a)/mag**0.9
+    Srd=Erad[i]/np.sin(alpha[i])**2/mag**1.8
+    Srd_1=Erad[i]/(a**2+(1-a**2)*np.sin(alpha[i])**2)/mag**1.8
+    if type[i]==0:
+        Srd_2=Erad/(a**2+(1-a**2)*np.sin(alpha)**2)/(1-p0s_p+p0s_p*np.exp(p1s_p*(density*1e3*np.cos(zenith)-rho_avg)))**2/mag**1.8
+    else:
+        Srd_2=Erad/(a**2+(1-a**2)*np.sin(alpha)**2)/(1-p0s_fe+p0s_fe*np.exp(p1s_fe*(density*1e3*np.cos(zenith)-rho_avg)))**2/mag**1.8
+
+    return Srd_2
+
+
+def return_a(rho,avg,p0,p1,p2):
+    a= p2+p0*np.exp(p1*(rho-avg))
+    return a
 
 
 
