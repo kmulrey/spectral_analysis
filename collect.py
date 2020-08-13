@@ -24,12 +24,12 @@ import process_files
 
 
 
-def return_Srd_info(RUNNR,event_no,primary):
+def return_Srd_info(RUNNR,event_no,primary,base):
 
 
-    data_dir='/vol/astro7/lofar/sim/pipeline/events/'+event_no+'/1/coreas/'+primary+'/'
-    steering_dir='/vol/astro7/lofar/sim/pipeline/events/'+event_no+'/1/coreas/'+primary+'/steering/'
-    coreas_dir='/vol/astro7/lofar/sim/pipeline/events/'+event_no+'/1/coreas/'+primary+'/SIM'+RUNNR+'_coreas/'
+    data_dir=base#'/vol/astro7/lofar/sim/pipeline/events/'+event_no+'/1/coreas/'+primary+'/'
+    steering_dir=base+'/steering/'#'/vol/astro7/lofar/sim/pipeline/events/'+event_no+'/1/coreas/'+primary+'/steering/'
+    coreas_dir=base+'/SIM'+RUNNR+'_coreas/'#'/vol/astro7/lofar/sim/pipeline/events/'+event_no+'/1/coreas/'+primary+'/SIM'+RUNNR+'_coreas/'
     atm_dir='/vol/astro7/lofar/sim/pipeline/atmosphere_files/'
     
     coreas_files=(glob.glob(coreas_dir+'*.dat'))
