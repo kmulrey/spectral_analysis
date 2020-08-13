@@ -22,8 +22,6 @@ import scipy.interpolate as intp
 import process_files
 
 
-
-
 def return_Srd_info(RUNNR,event_no,primary,base):
 
 
