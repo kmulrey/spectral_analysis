@@ -50,7 +50,7 @@ if path.isdir(base_dir+'/'+event+'/0/coreas/proton/'):
 if path.isdir(base_dir+'/'+event+'/1/coreas/proton/'):
     dir_list_proton.append(base_dir+'/'+event+'/1/coreas/proton/')
 if path.isdir(base_dir+'/'+event+'/2/coreas/proton/'):
-    dir_list_proton.append(base_dir+'/'+event+'/1/coreas/proton/')
+    dir_list_proton.append(base_dir+'/'+event+'/2/coreas/proton/')
                       
                       
 if path.isdir(base_dir+'/'+event+'/0/coreas/iron/'):
