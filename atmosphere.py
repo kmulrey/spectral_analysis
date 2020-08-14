@@ -142,7 +142,7 @@ def get_n_at_xmax(atm_file,hi):
 
 
 def return_height_xmax(atm,xmax,zenith):
-    step=0.005*1e5
+    step=0.001*1e5
     layers=atm[0]
     a=atm[1]
     b=atm[2]
