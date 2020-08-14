@@ -38,19 +38,17 @@ def return_Srd_info(RUNNR,event_no,primary,base):
     alpha= process_files.GetAlpha(zenith,az_rot,1.1837)
     em_dep,other_dep,total_dep=process_files.getEM(data_dir,RUNNR)
 
-
-
-
     atm=process_files.get_atm(event_no)
     hi=atmosphere.get_vertical_height(xmax,atm)   # height in cm
     at=atmosphere.get_atmosphere(hi,atm)
     rho=atmosphere.return_density(hi, atm)
-    rho2=atmosphere.return_density(hi/np.cos(zenith), atm)
-    dmax=atmosphere.get_distance_xmax_geometric(zenith, xmax, atm)
+    hxmax=atmosphere.return_height_xmax(atm,xmax,zenith)
+    dmax=atmosphere.get_distance_xmax_geometric(zenith, xmax, atm,hxmax)
+    rho2=atmosphere.return_density(hxmax, atm)
     n_xmax=atmosphere.get_n_at_xmax(atm_dir+'ATMOSPHERE_'+event_no+'.DAT',hi)
     cherenkov_angle=np.rad2deg(np.arccos(1/n_xmax))
     alpha=process_files.GetAlpha(zenith,az_rot,1.1837)
-    
+
     e_filt_30_80,time_filt_30_80=process_data.lofar_filter(efield,time,30.0,80.0,1.0)
     e_filt_30_200,time_filt_30_200=process_data.lofar_filter(efield,time,30.0,200.0,1.0)
     e_filt_50_350,time_filt_50_350=process_data.lofar_filter(efield,time,50.0,350.0,1.0)
