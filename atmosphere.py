@@ -98,7 +98,7 @@ def get_distance_for_height_above_ground(h, zenith, observation_level=760.):
     return (h ** 2 + 2 * r * h + r ** 2 * np.cos(zenith) ** 2) ** 0.5 - r * np.cos(zenith)
 
     
-def get_distance_xmax_geometric(zenith, xmax, atm,observation_level=760.):
+def get_distance_xmax_geometric(zenith, xmax, atm,h,observation_level=760.):
     '''
     input:
         - xmax in g/cm^2
@@ -107,8 +107,10 @@ def get_distance_xmax_geometric(zenith, xmax, atm,observation_level=760.):
         output: distance to xmax in cm
     '''
 
-    h = get_vertical_height(xmax,atm) - observation_level
+    #h = get_vertical_height(xmax,atm) - observation_level
     return get_distance_for_height_above_ground(h, zenith, observation_level)
+
+
 
 
 def get_vertical_height(T,atm):
