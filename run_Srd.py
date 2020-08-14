@@ -51,7 +51,9 @@ if path.isdir(base_dir+'/'+event+'/1/coreas/proton/'):
     dir_list_proton.append(base_dir+'/'+event+'/1/coreas/proton/')
 if path.isdir(base_dir+'/'+event+'/2/coreas/proton/'):
     dir_list_proton.append(base_dir+'/'+event+'/2/coreas/proton/')
-                      
+if path.isdir(base_dir+'/'+event+'/3/coreas/proton/'):
+    dir_list_proton.append(base_dir+'/'+event+'/3/coreas/proton/')
+                         
                       
 if path.isdir(base_dir+'/'+event+'/0/coreas/iron/'):
     dir_list_iron.append(base_dir+'/'+event+'/0/coreas/iron/')
@@ -59,6 +61,9 @@ if path.isdir(base_dir+'/'+event+'/1/coreas/iron/'):
     dir_list_iron.append(base_dir+'/'+event+'/1/coreas/iron/')
 if path.isdir(base_dir+'/'+event+'/2/coreas/iron/'):
     dir_list_iron.append(base_dir+'/'+event+'/2/coreas/iron/')
+if path.isdir(base_dir+'/'+event+'/3/coreas/iron/'):
+    dir_list_iron.append(base_dir+'/'+event+'/3/coreas/iron/')
+
 
 for j in np.arange(len(dir_list_proton)):
 #for j in np.arange(1):
