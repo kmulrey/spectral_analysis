@@ -107,7 +107,7 @@ def get_efield(datadir,fileno):
     antenna_positions[:,0], antenna_positions[:,1], antenna_positions[:,2] = -1*(temp[:,1])/100.,(temp[:,0])/100., temp[:,2]/100.
     ant_pos_uvw=GetUVW(antenna_positions, 0, 0, 0, zenith, az_rot,1.1837)
 
-    return antenna_positions,ant_pos_uvw,time,efield,zenith,az_rot,energy,xmax
+    return antenna_positions,ant_pos_uvw,time,efield,poldata,zenith,az_rot,energy,xmax
     
 
 
