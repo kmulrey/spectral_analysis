@@ -22,15 +22,6 @@ def GetUVW(pos, cx, cy, cz, zen, az, Binc):
     vxB = vxB/np.linalg.norm(vxB)
     vxvxB = np.array([v[1]*vxB[2]-v[2]*vxB[1],v[2]*vxB[0]-v[0]*vxB[2],v[0]*vxB[1]-v[1]*vxB[0]])
     return np.array([np.inner(vxB,relpos),np.inner(vxvxB,relpos),np.inner(v,relpos)]).T
-    
-def GetUVW_vector(trace, cx, cy, cz, zen, az, Binc):
-    relpos = pos-np.array([cx,cy,cz])
-    B = np.array([0,np.cos(Binc),-np.sin(Binc)])
-    v = np.array([-np.cos(az)*np.sin(zen),-np.sin(az)*np.sin(zen),-np.cos(zen)])
-    vxB = np.array([v[1]*B[2]-v[2]*B[1],v[2]*B[0]-v[0]*B[2],v[0]*B[1]-v[1]*B[0]])
-    vxB = vxB/np.linalg.norm(vxB)
-    vxvxB = np.array([v[1]*vxB[2]-v[2]*vxB[1],v[2]*vxB[0]-v[0]*vxB[2],v[0]*vxB[1]-v[1]*vxB[0]])
-return np.array([np.inner(vxB,relpos),np.inner(vxvxB,relpos),np.inner(v,relpos)]).T
 
 def GetAlpha(zen,az,Binc):
     B = np.array([0,np.cos(Binc),-np.sin(Binc)])
