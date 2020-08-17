@@ -45,7 +45,7 @@ def get_efield(datadir,fileno):
 
     efield=np.zeros([nTotalAnt,dlength,3])
     polfield=np.zeros([nTotalAnt,dlength,2])
-
+    XYZ_all=np.zeros([nTotalAnt,dlength,3])
     time=np.zeros([nTotalAnt,dlength])
 
     for l in np.arange(nTotalAnt):
@@ -102,12 +102,12 @@ def get_efield(datadir,fileno):
         polfield[j]=poldata
         efield[j]=UVW#data[:,1:]#UVW#
         time[j]=data.T[0]
-
+        XYZ_all[j]=XYZ
         temp=np.copy(antenna_positions)
     antenna_positions[:,0], antenna_positions[:,1], antenna_positions[:,2] = -1*(temp[:,1])/100.,(temp[:,0])/100., temp[:,2]/100.
     ant_pos_uvw=GetUVW(antenna_positions, 0, 0, 0, zenith, az_rot,1.1837)
 
-    return antenna_positions,ant_pos_uvw,time,efield,polfield,zenith,az_rot,energy,xmax,XYZ
+    return antenna_positions,ant_pos_uvw,time,efield,polfield,zenith,az_rot,energy,xmax,XYZ_all
     
 
 
