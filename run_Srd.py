@@ -125,7 +125,7 @@ for j in np.arange(len(dir_list_proton)):
             fluence_30_80.append(fluence1_30_80)
             fluence_30_200.append(fluence1_30_200)
             fluence_50_350.append(fluence1_50_350)
-            ant_pos_uvw.append(ant_pos_uvw1)
+            ant_pos.append(ant_pos_uvw1)
         except:
             print('error__________')
             
@@ -176,7 +176,7 @@ for j in np.arange(len(dir_list_iron)):
             Erad_ce_50_350.append(Erad_ce_50_350_1)
             em_dep.append(em_dep1)
             total_dep.append(total_dep1)
-            ant_pos_uvw.append(ant_pos_uvw1)
+            ant_pos.append(ant_pos_uvw1)
 
             dmax_grams.append(dmax_grams1)
             cherenkov_angle.append(cherenkov_angle1)
@@ -220,10 +220,10 @@ cherenkov_r=np.asarray(cherenkov_r)
 fluence_30_80=np.asarray(fluence_30_80)
 fluence_30_200=np.asarray(fluence_30_200)
 fluence_50_350=np.asarray(fluence_50_350)
-ant_pos_uvw=np.asarray(ant_pos_uvw)
+ant_pos=np.asarray(ant_pos)
 
 
-info={'energy':energy,'zenith':zenith,'azimuth':azimuth,'xmax':xmax,'hi':hi,'rho':rho,'rho2':rho2,'dmax':dmax,'n_xmax':n_xmax,'alpha':alpha,'clip_ratio':clip_ratio,'Erad_30_80':Erad_30_80,'Erad_gm_30_80':Erad_gm_30_80,'Erad_ce_30_80':Erad_ce_30_80,'Erad_30_200':Erad_30_200,'Erad_gm_30_200':Erad_gm_30_200,'Erad_ce_30_200':Erad_ce_30_200,'Erad_50_350':Erad_50_350,'Erad_gm_50_350':Erad_gm_50_350,'Erad_ce_50_350':Erad_ce_50_350,'em_dep':em_dep,'total_dep':total_dep,'prim':prim,'dmax_grams':dmax_grams,'cherenkov_angle':cherenkov_angle,'cherenkov_r':cherenkov_r,'fluence_30_80':fluence_30_80,'fluence_30_200':fluence_30_200,'fluence_50_350':fluence_50_350,'ant_pos_uvw':ant_pos_uvw}
+info={'energy':energy,'zenith':zenith,'azimuth':azimuth,'xmax':xmax,'hi':hi,'rho':rho,'rho2':rho2,'dmax':dmax,'n_xmax':n_xmax,'alpha':alpha,'clip_ratio':clip_ratio,'Erad_30_80':Erad_30_80,'Erad_gm_30_80':Erad_gm_30_80,'Erad_ce_30_80':Erad_ce_30_80,'Erad_30_200':Erad_30_200,'Erad_gm_30_200':Erad_gm_30_200,'Erad_ce_30_200':Erad_ce_30_200,'Erad_50_350':Erad_50_350,'Erad_gm_50_350':Erad_gm_50_350,'Erad_ce_50_350':Erad_ce_50_350,'em_dep':em_dep,'total_dep':total_dep,'prim':prim,'dmax_grams':dmax_grams,'cherenkov_angle':cherenkov_angle,'cherenkov_r':cherenkov_r,'fluence_30_80':fluence_30_80,'fluence_30_200':fluence_30_200,'fluence_50_350':fluence_50_350,'ant_pos':ant_pos}
 outfilename='/vol/astro3/lofar/sim/kmulrey/spectral_analysis/Srd_Data/'+event+'.p'
 outfile=open(outfilename,'wb')
 pickle.dump(info,outfile)
