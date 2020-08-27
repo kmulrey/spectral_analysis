@@ -114,4 +114,4 @@ def return_Srd_info(RUNNR,event_no,primary,base):
 
 
 
-    return energy,zenith,az_rot,xmax,hi,rho,rho2,dmax,dmax_grams,n_xmax,cherenkov_angle,cherenkov_r,alpha,clip_ratio,Erad_30_80,Erad_gm_30_80,Erad_ce_30_80,Erad_30_200,Erad_gm_30_200,Erad_ce_30_200,Erad_50_350,Erad_gm_50_350,Erad_ce_50_350,em_dep,total_dep,fluence_30_80,fluence_30_200,fluence_50_350
+    return energy,zenith,az_rot,xmax,hi,rho,rho2,dmax,dmax_grams,n_xmax,cherenkov_angle,cherenkov_r,alpha,clip_ratio,Erad_30_80,Erad_gm_30_80,Erad_ce_30_80,Erad_30_200,Erad_gm_30_200,Erad_ce_30_200,Erad_50_350,Erad_gm_50_350,Erad_ce_50_350,em_dep,total_dep,fluence_30_80,fluence_30_200,fluence_50_350,ant_pos_uvw
