@@ -26,6 +26,9 @@ hi=[]
 rho=[]
 rho2=[]
 dmax=[]
+dmax_grams=[]
+cherenkov_angle=[]
+cherenkov_r=[]
 n_xmax=[]
 alpha=[]
 clip_ratio=[]
@@ -41,6 +44,9 @@ Erad_ce_50_350=[]
 em_dep=[]
 total_dep=[]
 prim=[]
+fluence_30_80=[]
+fluence_30_200=[]
+fluence_50_350=[]
 
 dir_list_proton=[]
 dir_list_iron=[]
@@ -85,7 +91,7 @@ for j in np.arange(len(dir_list_proton)):
             base=direc
             print (event,runlist[i])
             primary='proton'
-            energy1,zenith1,azimuth1,xmax1,hi1,rho1,rho21,dmax1,n_xmax1,alpha1,clip_ratio1,Erad_30_80_1,Erad_gm_30_80_1,Erad_ce_30_80_1,Erad_30_200_1,Erad_gm_30_200_1,Erad_ce_30_200_1,Erad_50_350_1,Erad_gm_50_350_1,Erad_ce_50_350_1,em_dep1,total_dep1=collect.return_Srd_info(runlist[i],event,primary,base)
+            energy1,zenith1,azimuth1,xmax1,hi1,rho1,rho21,dmax1,dmax_grams1,n_xmax1,cherenkov_angle1,cherenkov_r1,alpha1,clip_ratio1,Erad_30_80_1,Erad_gm_30_80_1,Erad_ce_30_80_1,Erad_30_200_1,Erad_gm_30_200_1,Erad_ce_30_200_1,Erad_50_350_1,Erad_gm_50_350_1,Erad_ce_50_350_1,em_dep1,total_dep1,fluence1_30_80,fluence1_30_200,fluence1_50_350=collect.return_Srd_info(runlist[i],event,primary,base)
             if primary=='proton':
                 prim.append(0)
             if primary=='iron':
@@ -112,6 +118,12 @@ for j in np.arange(len(dir_list_proton)):
             Erad_ce_50_350.append(Erad_ce_50_350_1)
             em_dep.append(em_dep1)
             total_dep.append(total_dep1)
+            dmax_grams.append(dmax_grams1)
+            cherenkov_angle.append(cherenkov_angle1)
+            cherenkov_r.append(cherenkov_r1)
+            fluence_30_80.append(fluence1_30_80)
+            fluence_30_200.append(fluence1_30_200)
+            fluence_50_350.append(fluence1_50_350)
             
         except:
             print('error__________')
@@ -136,7 +148,7 @@ for j in np.arange(len(dir_list_iron)):
             base=direc
             print (event,runlist[i])
             primary='iron'
-            energy1,zenith1,azimuth1,xmax1,hi1,rho1,rho21,dmax1,n_xmax1,alpha1,clip_ratio1,Erad_30_80_1,Erad_gm_30_80_1,Erad_ce_30_80_1,Erad_30_200_1,Erad_gm_30_200_1,Erad_ce_30_200_1,Erad_50_350_1,Erad_gm_50_350_1,Erad_ce_50_350_1,em_dep1,total_dep1=collect.return_Srd_info(runlist[i],event,primary,base)
+            energy1,zenith1,azimuth1,xmax1,hi1,rho1,rho21,dmax1,dmax_grams1,n_xmax1,cherenkov_angle1,cherenkov_r1,alpha1,clip_ratio1,Erad_30_80_1,Erad_gm_30_80_1,Erad_ce_30_80_1,Erad_30_200_1,Erad_gm_30_200_1,Erad_ce_30_200_1,Erad_50_350_1,Erad_gm_50_350_1,Erad_ce_50_350_1,em_dep1,total_dep1,fluence1_30_80,fluence1_30_200,fluence1_50_350=collect.return_Srd_info(runlist[i],event,primary,base)
             if primary=='proton':
                 prim.append(0)
             if primary=='iron':
@@ -163,7 +175,14 @@ for j in np.arange(len(dir_list_iron)):
             Erad_ce_50_350.append(Erad_ce_50_350_1)
             em_dep.append(em_dep1)
             total_dep.append(total_dep1)
-        
+
+            dmax_grams.append(dmax_grams1)
+            cherenkov_angle.append(cherenkov_angle1)
+            cherenkov_r.append(cherenkov_r1)
+            fluence_30_80.append(fluence1_30_80)
+            fluence_30_200.append(fluence1_30_200)
+            fluence_50_350.append(fluence1_50_350)
+            
         except:
             print('error___________')
     
@@ -193,9 +212,15 @@ Erad_ce_50_350=np.asarray(Erad_ce_50_350)
 em_dep=np.asarray(em_dep)
 total_dep=np.asarray(total_dep)
 prim=np.asarray(prim)
+dmax_grams.append(dmax_grams1)
+cherenkov_angle.append(cherenkov_angle1)
+cherenkov_r.append(cherenkov_r1)
+fluence_30_80.append(fluence1_30_80)
+fluence_30_200.append(fluence1_30_200)
+fluence_50_350.append(fluence1_50_350)
 
-info={'energy':energy,'zenith':zenith,'azimuth':azimuth,'xmax':xmax,'hi':hi,'rho':rho,'rho2':rho2,'dmax':dmax,'n_xmax':n_xmax,'alpha':alpha,'clip_ratio':clip_ratio,'Erad_30_80':Erad_30_80,'Erad_gm_30_80':Erad_gm_30_80,'Erad_ce_30_80':Erad_ce_30_80,'Erad_30_200':Erad_30_200,'Erad_gm_30_200':Erad_gm_30_200,'Erad_ce_30_200':Erad_ce_30_200,'Erad_50_350':Erad_50_350,'Erad_gm_50_350':Erad_gm_50_350,'Erad_ce_50_350':Erad_ce_50_350,'em_dep':em_dep,'total_dep':total_dep,'prim':prim}
 
+info={'energy':energy,'zenith':zenith,'azimuth':azimuth,'xmax':xmax,'hi':hi,'rho':rho,'rho2':rho2,'dmax':dmax,'n_xmax':n_xmax,'alpha':alpha,'clip_ratio':clip_ratio,'Erad_30_80':Erad_30_80,'Erad_gm_30_80':Erad_gm_30_80,'Erad_ce_30_80':Erad_ce_30_80,'Erad_30_200':Erad_30_200,'Erad_gm_30_200':Erad_gm_30_200,'Erad_ce_30_200':Erad_ce_30_200,'Erad_50_350':Erad_50_350,'Erad_gm_50_350':Erad_gm_50_350,'Erad_ce_50_350':Erad_ce_50_350,'em_dep':em_dep,'total_dep':total_dep,'prim':prim,'dmax_grams':dmax_grams,'cherenkov_angle':cherenkov_angle,'cherenkov_r':cherenkov_r,'fluence_30_80':fluence_30_80,'fluence_30_200':fluence_30_200,'fluence_50_350':fluence_50_350}
 outfilename='/vol/astro3/lofar/sim/kmulrey/spectral_analysis/Srd_Data/'+event+'.p'
 outfile=open(outfilename,'wb')
 pickle.dump(info,outfile)
