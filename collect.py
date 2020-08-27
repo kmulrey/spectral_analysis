@@ -48,6 +48,8 @@ def return_Srd_info(RUNNR,event_no,primary,base):
     n_xmax=atmosphere.get_n_at_xmax(atm_dir+'ATMOSPHERE_'+event_no+'.DAT',hi)
     cherenkov_angle=np.rad2deg(np.arccos(1/n_xmax))
     alpha=process_files.GetAlpha(zenith,az_rot,1.1837)
+    dmax_grams=atmosphere.return_dmax_grams(atm,hxmax,zenith)
+    cherenkov_r=dmax/1e2*np.sin(np.pi/180.0*cherenkov_angle)
 
     e_filt_30_80,time_filt_30_80=process_data.lofar_filter(efield,time,30.0,80.0,1.0)
     e_filt_30_200,time_filt_30_200=process_data.lofar_filter(efield,time,30.0,200.0,1.0)
@@ -112,4 +114,4 @@ def return_Srd_info(RUNNR,event_no,primary,base):
 
 
 
-    return energy,zenith,az_rot,xmax,hi,rho,rho2,dmax,n_xmax,alpha,clip_ratio,Erad_30_80,Erad_gm_30_80,Erad_ce_30_80,Erad_30_200,Erad_gm_30_200,Erad_ce_30_200,Erad_50_350,Erad_gm_50_350,Erad_ce_50_350,em_dep,total_dep
+    return energy,zenith,az_rot,xmax,hi,rho,rho2,dmax,dmax_grams,n_xmax,cherenkov_angle,cherenkov_r,alpha,clip_ratio,Erad_30_80,Erad_gm_30_80,Erad_ce_30_80,Erad_30_200,Erad_gm_30_200,Erad_ce_30_200,Erad_50_350,Erad_gm_50_350,Erad_ce_50_350,em_dep,total_dep,fluence_30_80,fluence_30_200,fluence_50_350
