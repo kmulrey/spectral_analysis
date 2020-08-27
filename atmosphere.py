@@ -171,3 +171,34 @@ def return_height_xmax(atm,xmax,zenith):
         total_mass=density*(step/np.cos(zenith))+total_mass
         
     return h
+
+
+def return_dmax_grams(atm,hxmax,zenith):
+    step=0.001*1e5
+    layers=atm[0]
+    a=atm[1]
+    b=atm[2]
+    c=atm[3]
+
+    total_mass=0
+    start=760
+    count=0
+    h=760
+    while h<=hxmax:
+        h=start+step*count
+        d=h/np.cos(zenith)
+        density=0
+        if h>=layers[0] and h<layers[1]:
+            density=b[0]/c[0]*np.exp(-1*h/c[0])
+        if h>layers[1] and h<layers[2]:
+            density=b[1]/c[1]*np.exp(-1*h/c[1])
+        if h>layers[2] and h<layers[3]:
+            density=b[2]/c[2]*np.exp(-1*h/c[2])
+        if h>layers[3] and h<layers[4]:
+            density=b[3]/c[3]*np.exp(-1*h/c[3])
+        if h>=layers[4]:
+            density=-1*b[4]/c[4]
+        count=count+1
+        total_mass=density*(step/np.cos(zenith))+total_mass
+
+    return total_mass

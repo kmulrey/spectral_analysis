@@ -89,11 +89,11 @@ def fit_spec_SKA(freq,spec):
     e_min=-3.3
     logspec1=np.log10(np.abs(spec))
     n_points=len(freq[(freq>fmin)*(freq<fmax)*(spec>e_min)])
+    flag=0
 
     if n_points<min_points:
         flag=1
 
-    flag=0
 
     if len(freq[(freq>fmin)*(freq<fmax)*(logspec1>e_min)])<10:
         flag=1
