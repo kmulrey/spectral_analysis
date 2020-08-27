@@ -212,12 +212,12 @@ Erad_ce_50_350=np.asarray(Erad_ce_50_350)
 em_dep=np.asarray(em_dep)
 total_dep=np.asarray(total_dep)
 prim=np.asarray(prim)
-dmax_grams.append(dmax_grams1)
-cherenkov_angle.append(cherenkov_angle1)
-cherenkov_r.append(cherenkov_r1)
-fluence_30_80.append(fluence1_30_80)
-fluence_30_200.append(fluence1_30_200)
-fluence_50_350.append(fluence1_50_350)
+dmax_grams=np.asarray(dmax_grams)
+cherenkov_angle=np.asarray(cherenkov_angle)
+cherenkov_r=np.asarray(cherenkov_r)
+fluence_30_80=np.asarray(fluence_30_80)
+fluence_30_200=np.asarray(fluence_30_200)
+fluence_50_350=np.asarray(fluence_50_350)
 
 
 info={'energy':energy,'zenith':zenith,'azimuth':azimuth,'xmax':xmax,'hi':hi,'rho':rho,'rho2':rho2,'dmax':dmax,'n_xmax':n_xmax,'alpha':alpha,'clip_ratio':clip_ratio,'Erad_30_80':Erad_30_80,'Erad_gm_30_80':Erad_gm_30_80,'Erad_ce_30_80':Erad_ce_30_80,'Erad_30_200':Erad_30_200,'Erad_gm_30_200':Erad_gm_30_200,'Erad_ce_30_200':Erad_ce_30_200,'Erad_50_350':Erad_50_350,'Erad_gm_50_350':Erad_gm_50_350,'Erad_ce_50_350':Erad_ce_50_350,'em_dep':em_dep,'total_dep':total_dep,'prim':prim,'dmax_grams':dmax_grams,'cherenkov_angle':cherenkov_angle,'cherenkov_r':cherenkov_r,'fluence_30_80':fluence_30_80,'fluence_30_200':fluence_30_200,'fluence_50_350':fluence_50_350}
